@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="34d56c93-a278-41a9-b2ef-33ab5cd3f338" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="method_exampleFlow" doc:id="2bc2e169-7ae8-428b-94e6-1b5ca7e87698" >
+		<http:listener doc:name="Listener" doc:id="a391e7d8-fc0b-4504-a219-aa6b231e6cf1" config-ref="HTTP_Listener_config" path="/choice3"/>
+		<set-variable value="#[attributes.method]" doc:name="Set Variable" doc:id="a98c8d9b-bad1-4a27-82e0-daf012fdc5bb" variableName="operation"/>
+		<choice doc:name="Choice" doc:id="132230be-9691-409d-92ee-d94379c3f9ae" >
+			<when expression="#[vars.operation=='GET']">
+				<set-payload value="Get method will be excuted" doc:name="Set Payload" doc:id="aabb47d9-6135-4317-84ac-049c922d2d77" />
+			</when>
+			<when expression="#[vars.operation=='POST']">
+				<set-payload value="POST METHOD WILL BE EXCUTED" doc:name="Set Payload" doc:id="f6cfa6a9-e4fb-4d26-9f4c-327803f9c3f0" />
+			</when>
+			<when expression="#[vars.operation=='PUT']">
+				<set-payload value="PUT METHOD WILL BE EXCUTED" doc:name="Set Payload" doc:id="54bf4e98-2b4a-42ac-bf26-e71c4295fb69" />
+			</when>
+			<otherwise >
+				<set-payload value="NO OPTION" doc:name="Set Payload" doc:id="6fd5d29f-c184-49d1-822e-fc694519fa11" />
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
